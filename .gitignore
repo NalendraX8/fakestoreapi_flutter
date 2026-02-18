@@ -1,0 +1,28 @@
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Android
+.gradle/
+local.properties
+*.keystore
+*.jks
+**/android/app/build
+**/android/app/src/main/res/generated
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.swp
+*.lock
+
+# Others
+.cxx/
+CMakeCache.txt
+CMakeFiles/
