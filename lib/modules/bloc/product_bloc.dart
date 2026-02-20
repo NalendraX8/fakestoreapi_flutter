@@ -23,7 +23,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
                 final products = await repository.getProducts();
                 emit(ProductLoaded(products));
             } catch (e) {
-                emit(ProductError(e.toString()));
+                final message = e.toString().replaceAll('Exception: ', '');
+                emit(ProductError(message));
             }
         },
         );
@@ -33,7 +34,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
                 final product = await repository.getProductById(event.id);
                 emit(ProductDetailLoaded(product));
             } catch (e) {
-                emit(ProductError(e.toString()));
+                final message = e.toString().replaceAll('Exception: ', '');
+                emit(ProductError(message));
             }
         },
         );

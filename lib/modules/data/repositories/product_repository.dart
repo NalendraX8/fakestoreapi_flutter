@@ -17,10 +17,10 @@ class ProductRepository {
                 final List<dynamic> data = response.data;
                 return data.map((e) => ProductModel.fromJson((e))).toList();
             } else {
-                throw Exception('gagal mengambil data hayo');
+                throw Exception('Data gagal mengambil dari server');
             }
         } catch (e) {
-            throw Exception('Error: $e');
+            throw Exception('Terjadi kesalahan');
         }
     }
     //ini menuju ke detail produk
@@ -30,10 +30,31 @@ class ProductRepository {
             if (response.statusCode == 200) {
                 return ProductModel.fromJson(response.data);
             } else {
-                throw Exception('produk ngilang');
+                throw Exception('Data produk tidak ditemukan');
             }
         } catch (e) {
-            throw Exception('Error: $e');
+            throw Exception('Terjadi kesalahan');
+        }
+    }
+
+    //ini untuk handle error
+
+    String _handleError(DioException e) {
+        switch (e.type) {
+            case DioExceptionType.connectionTimeout:
+                return 'Koneksi timeout';
+            case DioExceptionType.sendTimeout:
+                return 'Koneksi timeout';
+            case DioExceptionType.receiveTimeout:
+                return 'Koneksi lambat, coba lagi dengan koneksi yang lebih baik';
+            case DioExceptionType.badResponse:
+                return 'Server Error (${e.response?.statusCode}), Mohon coba kembali lagi';
+            case DioExceptionType.cancel:
+                return 'Permintaan dibatalkan';
+            case DioExceptionType.connectionError:
+                return 'aduh gak ada koneksi internet';
+            default:
+                return 'Terjadi gangguan pada jaringan';
         }
     }
 }

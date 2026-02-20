@@ -24,6 +24,8 @@ dependencies:
 
   #Icons
   cupertino_icons: ^1.0.8
+  awesome_snackbar_content: ^0.1.8
+  flutter_spinkit: ^5.2.2
 
 dev_dependencies:
   flutter_test:
