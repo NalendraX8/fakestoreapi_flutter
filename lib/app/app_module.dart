@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../modules/product/presentation/pages/product_list_page.dart';
 import '../modules/product/presentation/pages/product_detail_page.dart';
 import '../modules/product/presentation/bloc/product_bloc.dart';
-import '../modules/product/data/repositories/product_repository.dart';
+import '../modules/product/domain/repositories/product_repository.dart';
 
 import '../modules/cart/presentation/pages/cart_pages.dart';
 import '../modules/cart/presentation/cubit/cart_cubit.dart';

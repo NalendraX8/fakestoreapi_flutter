@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import '../models/product_model.dart';
+import '../../data/models/product_model.dart';
 
 class ProductRepository {
 

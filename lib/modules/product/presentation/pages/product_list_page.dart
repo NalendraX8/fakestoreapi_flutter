@@ -9,9 +9,9 @@ import '../bloc/product_state.dart';
 import '../../../cart/presentation/cubit/cart_cubit.dart';
 import '../../../cart/presentation/pages/cart_pages.dart';
 // Import widget yang baru saja kita buat
-import '../../../../app/core/widget/search_bar.dart' as custom_search;
-import '../../../../app/core/widget/category_item.dart';
-import '../../../../app/core/widget/product_card.dart';
+import '../../../../shared/widget/search_bar.dart' as custom_search;
+import '../../../../shared/widget/category_item.dart';
+import '../../../../shared/widget/product_card.dart';
 
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});

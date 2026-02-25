@@ -19,7 +19,7 @@ class CartPage extends StatelessWidget {
           onPressed: () => Modular.to.pop(),
         ),
         title: const Text(
-          'My Cart',
+          'Cart Gwe',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -55,6 +55,7 @@ class CartPage extends StatelessWidget {
           ),
         ],
       ),
+      //bloc 
       body: BlocBuilder<CartCubit, CartState>(
         bloc: Modular.get<CartCubit>(),
         builder: (context, state) {
@@ -158,7 +159,7 @@ class CartPage extends StatelessWidget {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              // Nanti logika checkout di sini
+                              // cekout nanti aja 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Fitur Checkout belum tersedia')),
                               );
@@ -274,7 +275,7 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  // Widget tombol bulat kecil untuk + dan -
+  // tombol bulat kecil untuk + dan -
   Widget _buildQtyButton({required IconData icon, required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
