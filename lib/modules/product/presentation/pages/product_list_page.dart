@@ -3,14 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:fast_store/modules/bloc/product_bloc.dart';
-import 'package:fast_store/modules/bloc/product_event.dart';
-import 'package:fast_store/modules/bloc/product_state.dart';
-
+import '../bloc/product_bloc.dart';
+import '../bloc/product_event.dart';
+import '../bloc/product_state.dart';
+import '../../../cart/presentation/cubit/cart_cubit.dart';
+import '../../../cart/presentation/pages/cart_pages.dart';
 // Import widget yang baru saja kita buat
-import '../../../app/core/widget/search_bar.dart' as custom_search;
-import '../../../app/core/widget/category_item.dart';
-import '../../../app/core/widget/product_card.dart';
+import '../../../../app/core/widget/search_bar.dart' as custom_search;
+import '../../../../app/core/widget/category_item.dart';
+import '../../../../app/core/widget/product_card.dart';
 
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});
@@ -84,29 +85,43 @@ class _ProductListPageState extends State<ProductListPage> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Stack(
-                                children: [
-                                  const Icon(Icons.shopping_cart_outlined),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(4),
-                                      decoration: const BoxDecoration(
-                                        color: Colors.blue,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: const Text(
-                                        '4', // Hardcored sesuai desain
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 8,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                              child: BlocBuilder<CartCubit, CartState>(
+                                bloc: Modular.get<CartCubit>(),
+                                builder: (context, state) {
+                                  int totalPcs = 0;
+                                  if (state is CartLoaded) {
+                                    totalPcs = state.totalItems;
+                                  }
+                                  return GestureDetector(
+                                    onTap: () => Modular.to.pushNamed('/cart'),
+                                    child: Stack(
+                                      clipBehavior: Clip.none,
+                                      children: [
+                                        const Icon(Icons.shopping_cart_outlined),
+                                        if (totalPcs > 0)
+                                          Positioned(
+                                            right: -4,
+                                            top: -4,
+                                            child: Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: const BoxDecoration(
+                                                color: Colors.red,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Text(
+                                                totalPcs > 99 ? '99+' : totalPcs.toString(),
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 8,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
                                     ),
-                                  ),
-                                ],
+                                  );
+                                },
                               ),
                             ),
                           ],
@@ -223,7 +238,7 @@ class _ProductListPageState extends State<ProductListPage> {
                       ),
                     ),
                   ),
-                  
+
                 // Spacing ekstra di bawah
                 const SliverToBoxAdapter(child: SizedBox(height: 40)),
               ],

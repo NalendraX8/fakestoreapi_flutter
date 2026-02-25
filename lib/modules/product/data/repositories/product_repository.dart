@@ -8,34 +8,37 @@ class ProductRepository {
     final Dio dio;
     ProductRepository({required this.dio});
 
-    Future<List<ProductModel>> getProducts() async {
-        try{
-            //get produk dari fakestoreapi
-            final response = await dio.get('https://fakestoreapi.com/products');
+Future<List<ProductModel>> getProducts() async {
+    try {
+      final response = await dio.get('https://fakestoreapi.com/products');
 
-            if (response.statusCode == 200) {
-                final List<dynamic> data = response.data;
-                return data.map((e) => ProductModel.fromJson((e))).toList();
-            } else {
-                throw Exception('Data gagal mengambil dari server');
-            }
-        } catch (e) {
-            throw Exception('Terjadi kesalahan');
-        }
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((e) => ProductModel.fromJson(e)).toList();
+      } else {
+        throw Exception('Gagal mengambil data produk');
+      }
+    } on DioException catch (e) {
+      throw Exception(_handleError(e));
+    } catch (e) {
+      throw Exception('Terjadi kesalahan tidak terduga');
     }
-    //ini menuju ke detail produk
-    Future<ProductModel> getProductById(int id) async {
-        try {
-            final response = await dio.get('https://fakestoreapi.com/products/$id');
-            if (response.statusCode == 200) {
-                return ProductModel.fromJson(response.data);
-            } else {
-                throw Exception('Data produk tidak ditemukan');
-            }
-        } catch (e) {
-            throw Exception('Terjadi kesalahan');
-        }
+  }
+
+  Future<ProductModel> getProductById(int id) async {
+    try {
+      final response = await dio.get('https://fakestoreapi.com/products/$id');
+      if (response.statusCode == 200) {
+        return ProductModel.fromJson(response.data);
+      } else {
+        throw Exception('Produk tidak ditemukan');
+      }
+    } on DioException catch (e) {
+      throw Exception(_handleError(e));
+    } catch (e) {
+      throw Exception('Terjadi kesalahan');
     }
+  }
 
     //ini untuk handle error
 

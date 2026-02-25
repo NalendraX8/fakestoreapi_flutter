@@ -6,6 +6,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../bloc/product_bloc.dart';
 import '../bloc/product_event.dart';
 import '../bloc/product_state.dart';
+import '../../../cart/presentation/cubit/cart_cubit.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final String id;
@@ -60,9 +61,48 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             icon: const Icon(Icons.share_outlined, color: Colors.black),
             onPressed: () {},
           ),
-          IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black),
-            onPressed: () {},
+          BlocBuilder<CartCubit, CartState>(
+            bloc: Modular.get<CartCubit>(),
+            builder: (context, state) {
+              int totalPcs = 0;
+              if (state is CartLoaded) {
+                totalPcs = state.totalItems;
+              }
+              return GestureDetector(
+                onTap: () {
+                  Modular.to.pushNamed('/cart');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      const Icon(Icons.shopping_cart_outlined, color: Colors.black, size: 28),
+                      if (totalPcs > 0)
+                        Positioned(
+                          right: -4,
+                          top: -4,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              totalPcs > 99 ? '99+' : totalPcs.toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
           const SizedBox(width: 8),
         ],
@@ -111,7 +151,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           ),
                         ),
                       ),
-                      
+
                       // 2. Info Harga & Judul
                       Container(
                         padding: const EdgeInsets.all(24),
@@ -190,7 +230,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               ],
                             ),
                             const SizedBox(height: 32),
-                            
+
                             // 3. Deskripsi
                             const Text(
                               'Description',
@@ -213,7 +253,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ],
                   ),
                 ),
-                
+
                 // 4. Bottom Action Bar (Fixed)
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -255,7 +295,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           const SizedBox(width: 16),
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Modular.get<CartCubit>().addToCart(product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('${product.title} ditambahkan ke keranjang!'),
+                                    duration: const Duration(seconds: 1),
+                                    backgroundColor: Colors.green.shade600,
+                                  ),
+                                );
+                              },
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(vertical: 16),
                                 backgroundColor: Colors.blue.shade700,

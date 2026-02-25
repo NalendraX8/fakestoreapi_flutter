@@ -1,4 +1,4 @@
-import 'package:fast_store/modules/data/models/product_model.dart';
+import '../../data/models/product_model.dart';
 
 abstract class ProductState {}
 

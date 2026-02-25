@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../modules/pages/product_list_page.dart';
-import '../modules/pages/product_detail_page.dart';
-import '../modules/bloc/product_bloc.dart';
-import '../modules/data/repositories/product_repository.dart';
+import '../modules/product/presentation/pages/product_list_page.dart';
+import '../modules/product/presentation/pages/product_detail_page.dart';
+import '../modules/product/presentation/bloc/product_bloc.dart';
+import '../modules/product/data/repositories/product_repository.dart';
+
+import '../modules/cart/presentation/pages/cart_pages.dart';
+import '../modules/cart/presentation/cubit/cart_cubit.dart';
 
 class AppModule extends Module {
     @override
@@ -15,6 +18,8 @@ class AppModule extends Module {
         i.add(() => ProductRepository(dio: i<Dio>()));
         //bind bloc
         i.add(() => ProductBloc(repository: i<ProductRepository>()));
+
+        i.addSingleton<CartCubit>(() => CartCubit());
     }
 
   @override
@@ -23,5 +28,7 @@ class AppModule extends Module {
     r.child('/', child: (context) => const ProductListPage());
     // Route Detail (dengan parameter :id)
     r.child('/product/:id', child: (context) => ProductDetailPage(id: r.args.params['id']));
+    // Route Keranjang
+    r.child('/cart', child: (context) => CartPage());
     }
 }
