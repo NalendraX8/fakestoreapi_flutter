@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../data/models/cart_item_model.dart';
-import '../cubit/cart_cubit.dart';
+import '../../domain/cubit/cart_cubit.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -55,7 +55,7 @@ class CartPage extends StatelessWidget {
           ),
         ],
       ),
-      //bloc 
+      //widget yang otomatis setiap state CartCubit berubah
       body: BlocBuilder<CartCubit, CartState>(
         bloc: Modular.get<CartCubit>(),
         builder: (context, state) {

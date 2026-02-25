@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../bloc/product_bloc.dart';
-import '../bloc/product_event.dart';
-import '../bloc/product_state.dart';
-import '../../../cart/presentation/cubit/cart_cubit.dart';
+import '../../domain/bloc/product_bloc.dart';
+import '../../domain/bloc/product_event.dart';
+import '../../domain/bloc/product_state.dart';
+import '../../../cart/domain/cubit/cart_cubit.dart';
 import '../../../cart/presentation/pages/cart_pages.dart';
 // Import widget yang baru saja kita buat
 import '../../../../shared/widget/search_bar.dart' as custom_search;

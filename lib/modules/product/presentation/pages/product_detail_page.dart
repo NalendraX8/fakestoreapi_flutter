@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import '../bloc/product_bloc.dart';
-import '../bloc/product_event.dart';
-import '../bloc/product_state.dart';
-import '../../../cart/presentation/cubit/cart_cubit.dart';
+import '../../domain/bloc/product_bloc.dart';
+import '../../domain/bloc/product_event.dart';
+import '../../domain/bloc/product_state.dart';
+import '../../../cart/domain/cubit/cart_cubit.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final String id;
@@ -122,7 +122,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           } else if (state is ProductDetailLoaded) {
             final product = state.product;
             return Stack(
-              children: [
+              children: [ 
                 SingleChildScrollView(
                   padding: const EdgeInsets.only(bottom: 100), // Ruang untuk bottom bar
                   child: Column(

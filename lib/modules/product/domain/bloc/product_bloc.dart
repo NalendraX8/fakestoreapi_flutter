@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/repositories/product_repository.dart';
+import '../repositories/product_repository.dart';
 import 'product_event.dart';
 import 'product_state.dart';
 
